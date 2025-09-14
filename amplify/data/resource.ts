@@ -7,24 +7,60 @@ specifies that any user authenticated via an API key can "create", "read",
 "update", and "delete" any "Todo" records.
 =========================================================================*/
 const schema = a.schema({
-  Todo: a
-    .model({
-      content: a.string(),
-    })
-    .authorization((allow) => [allow.publicApiKey()]),
+    // Todo: a
+    //     .model({
+    //         content: a.string(),
+    //     })
+    //     .authorization((allow) => [
+    //         // allow.publicApiKey(),
+    //         allow.owner(),
+    //     ]),
+    RamenReview: a
+        .model({
+            title: a.string(),
+            content: a.string(),
+            star: a.integer(),
+            storeName: a.string(),
+            reviewerName: a.string(),
+            reviewerId: a.string(),
+        })
+        .authorization((allow) => [
+            allow.authenticated().to(["read"]),
+            //
+            allow.owner(),
+        ]),
+    User: a
+        .model({
+            // id: a.id(),
+            nickName: a.string(),
+        })
+        .authorization((allow) => [
+            // allow.guest().to(["read"]),
+            // allow.owner().to(["create", "update"]),
+            allow.owner(),
+        ]),
+    ReviewReaction: a
+        .model({
+            reviewId: a.id(),
+        })
+        .authorization((allow) => [
+            allow.guest().to(["read"]),
+            allow.owner().to(["create", "delete"]),
+        ]),
 });
 
 export type Schema = ClientSchema<typeof schema>;
 
 export const data = defineData({
-  schema,
-  authorizationModes: {
-    defaultAuthorizationMode: "apiKey",
-    // API Key is used for a.allow.public() rules
-    apiKeyAuthorizationMode: {
-      expiresInDays: 30,
+    schema,
+    authorizationModes: {
+        // defaultAuthorizationMode: "apiKey",
+        defaultAuthorizationMode: "userPool",
+        // API Key is used for a.allow.public() rules
+        apiKeyAuthorizationMode: {
+            expiresInDays: 30,
+        },
     },
-  },
 });
 
 /*== STEP 2 ===============================================================
