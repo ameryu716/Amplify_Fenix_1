@@ -8,7 +8,7 @@ import "beercss";
 import "material-dynamic-colors";
 import "./stylus/override.css";
 import "./stylus/lib.css";
-await ui("theme", "#F7A240");
+ui("theme", "#F7A240");
 import "@/stylus/main.css";
 
 Amplify.configure(outputs);

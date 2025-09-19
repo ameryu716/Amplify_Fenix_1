@@ -1,24 +1,21 @@
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue';
+// import { onMounted, ref } from 'vue';
 import type { Schema } from '../../amplify/data/resource';
-import { generateClient } from 'aws-amplify/data';
+// import { generateClient } from 'aws-amplify/data';
 
-const client = generateClient<Schema>();
+// const client = generateClient<Schema>();
 
 const props = defineProps<{
-    userInfo: Schema['User'],
+    userInfo: Schema["User"]["type"];
 }>();
 
 const emits = defineEmits<{
     (e: 'reload'): void
 }>()
 
-
 const showProfile = () => {
     emits("reload");
 }
-
-
 
 </script>
 
@@ -34,7 +31,7 @@ const showProfile = () => {
         <!-- <span>Hello, {{ toMask(user?.signInDetails?.loginId) }}</span> -->
 
         <span>Hello, </span>
-        <span v-if="userInfo?.nickName">{{ userInfo.nickName }}</span>
+        <span v-if="props.userInfo?.nickName">{{ props.userInfo.nickName }}</span>
         <i v-else>Guest</i>
     </button>
 </template>

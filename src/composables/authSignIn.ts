@@ -9,12 +9,14 @@ export function useAuthSignin() {
     const { user } = useAuthenticator();
 
     const existing: any = ref(null);
-    const sub = ref(null);
-    const userInfo = ref<Schema["User"] | null>(null);
+    const sub = ref<null | string>(null);
+    const userInfo = ref<Schema["User"]["type"] | null>(null);
 
     console.log("auth signin composable.");
 
     const loadUserInfo = () => {
+        if (!sub.value) throw new Error("subjectId is null");
+
         client.models.User.get({ id: sub.value }).then((user) => {
             userInfo.value = <any>user.data;
         });
@@ -24,7 +26,7 @@ export function useAuthSignin() {
         console.log("watched: user", user.value);
 
         // if (newUser) {
-        sub.value = user.userId; // Cognitoのsub
+        sub.value = user.userId as string; // Cognitoのsub
         console.log("ログインユーザー:", sub);
 
         // Userテーブルに存在確認 & 作成

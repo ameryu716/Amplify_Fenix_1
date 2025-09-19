@@ -7,7 +7,7 @@ import StarRating from './StarRating.vue';
 const client = generateClient<Schema>();
 
 const props = defineProps<{
-    userInfo: Schema['User'],
+    userInfo: Schema['User']["type"],
 }>();
 
 const emits = defineEmits<{
@@ -25,10 +25,10 @@ const inputModel = reactive({
 })
 
 const errorMessage = reactive({
-    title: null,
-    content: null,
-    star: null,
-    storeName: null,
+    title: null as string | null,
+    content: null as string | null,
+    star: null as string | null,
+    storeName: null as string | null,
 })
 
 const close = () => {

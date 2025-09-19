@@ -6,7 +6,7 @@ import ReviewCreateDialog from './ReviewCreateDialog.vue';
 import ProfileBox from './ProfileBox.vue';
 import { Authenticator, useAuthenticator } from '@aws-amplify/ui-vue';
 // import { toMask } from '@/utils';
-import StarRating from './StarRating.vue';
+// import StarRating from './StarRating.vue';
 import { useAuthSignin } from '../composables/authSignIn'
 import UserWriteDialog from './UserWriteDialog.vue';
 import ReviewCard from './ReviewCard.vue';
@@ -146,16 +146,16 @@ onMounted(() => {
         <footer>
             <p>This is ramen reviewer. 2025</p>
         </footer>
-
-        <!-- dialog -->
-        <div class="overlay active" v-if="dialog.reviewCreate || dialog.nickNameWrite || dialog.reviewViewer">
-        </div>
-        <ReviewCreateDialog v-if="dialog.reviewCreate" :userInfo="userInfo" @close="closeReviewDialog"
-            @confirm="onConfirmCreateReview" />
-        <UserWriteDialog v-if="dialog.nickNameWrite" :nickName="userInfo?.nickName" @confirm="onConfirmWriteNickName" />
-        <ReviewViewerDialog v-if="dialog.reviewViewer && selectedReview" :review="selectedReview"
-            @close="dialog.reviewViewer = false" @delete="onDeleteReview" />
     </div>
+
+    <!-- dialog -->
+    <div class="overlay active" v-if="dialog.reviewCreate || dialog.nickNameWrite || dialog.reviewViewer">
+    </div>
+    <ReviewCreateDialog v-if="dialog.reviewCreate && userInfo" :userInfo="userInfo" @close="closeReviewCreateDialog"
+        @confirm="onConfirmCreateReview" />
+    <UserWriteDialog v-if="dialog.nickNameWrite" :nickName="userInfo?.nickName" @confirm="onConfirmWriteNickName" />
+    <ReviewViewerDialog v-if="dialog.reviewViewer && selectedReview" :review="selectedReview"
+        @close="dialog.reviewViewer = false" @delete="onDeleteReview" />
 </template>
 
 <style scoped>

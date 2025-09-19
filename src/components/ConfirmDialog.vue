@@ -1,7 +1,7 @@
-<script setup lang="ts">
-import { useConfirmControl } from '@/composables/ConfirmControl';
+<!-- <script setup lang="ts">
+// import { useConfirmControl } from '@/composables/ConfirmControl';
 
-const { show, title, message, showDialog } = useConfirmControl();
+// const { show, title, message, showDialog } = useConfirmControl();
 
 
 </script>
@@ -14,4 +14,4 @@ const { show, title, message, showDialog } = useConfirmControl();
             <button class="transparent link">確定</button>
         </nav>
     </dialog>
-</template>
+</template> -->

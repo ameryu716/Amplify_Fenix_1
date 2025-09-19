@@ -3,7 +3,7 @@ import { readonly, ref, watch } from "vue";
 
 const props = defineProps({
     modelValue: {
-        type: Number,
+        type: Number as () => number | null | undefined,
         default: 0,
     },
     readonly: {
@@ -14,20 +14,20 @@ const props = defineProps({
 
 const emit = defineEmits(["update:modelValue"]);
 
-const rating = ref(props.modelValue);
+const rating = ref<number>(props.modelValue ?? 0);
 
 // 親から変更された場合に同期
-watch(
-    () => props.modelValue,
-    (newVal) => {
-        rating.value = newVal;
-    }
-);
+// watch(
+//     () => props.modelValue,
+//     (newVal) => {
+//         rating.value = newVal;
+//     }
+// );
 
-function setRating(value) {
+function setRating(v: number) {
     if (props.readonly) return
-    rating.value = value;
-    emit("update:modelValue", value);
+    rating.value = v;
+    emit("update:modelValue", v);
 }
 </script>
 
