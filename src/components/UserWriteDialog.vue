@@ -56,7 +56,7 @@ const writeUserNickName = async () => {
             <!-- <span class="helper">※レビュー者名として表示されます</span> -->
         </div>
         <div class="fl">
-            <button class="responsive" @click="writeUserNickName">登録</button>
+            <button class="responsive" @click="writeUserNickName" :disabled="!!errorMessage.nickName">登録</button>
         </div>
     </dialog>
 </template>
