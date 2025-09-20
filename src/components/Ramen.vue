@@ -55,7 +55,6 @@ function listReviews() {
     });
 }
 
-//
 const openReviewDialog = (): void => {
     dialog.reviewCreate = true
 }
@@ -78,6 +77,8 @@ const onConfirmWriteNickName = () => {
     loadUserInfo();
     dialog.nickNameWrite = false;
 }
+const closeUserWriteDialog = () => dialog.nickNameWrite = false
+
 
 const onClickReview = (review: Schema['RamenReview']["type"]) => {
     selectedReview.value = review;
@@ -153,9 +154,10 @@ onMounted(() => {
     </div>
     <ReviewCreateDialog v-if="dialog.reviewCreate && userInfo" :userInfo="userInfo" @close="closeReviewCreateDialog"
         @confirm="onConfirmCreateReview" />
-    <UserWriteDialog v-if="dialog.nickNameWrite" :nickName="userInfo?.nickName" @confirm="onConfirmWriteNickName" />
+    <UserWriteDialog v-if="dialog.nickNameWrite" :nickName="userInfo?.nickName" @confirm="onConfirmWriteNickName"
+        @close="closeUserWriteDialog" />
     <ReviewViewerDialog v-if="dialog.reviewViewer && selectedReview" :review="selectedReview"
-        @close="dialog.reviewViewer = false" @delete="onDeleteReview" />
+        @close="closeReviewViewerDialog" @delete="onDeleteReview" />
 </template>
 
 <style scoped>

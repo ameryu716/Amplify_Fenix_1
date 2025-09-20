@@ -39,8 +39,6 @@ const close = () => {
 </script>
 <template>
     <dialog class="active">
-        <!-- <article class="border"> -->
-
         <div class="fl">
             <i>store</i>
             <b class="ml-1">{{ review.storeName }}</b>
@@ -62,7 +60,6 @@ const close = () => {
         <div class="fl j-end" v-if="isMyReview">
             <button class="link transparent text-red-500" @click="del">削除</button>
         </div>
-        <!-- </article> -->
     </dialog>
 </template>
 

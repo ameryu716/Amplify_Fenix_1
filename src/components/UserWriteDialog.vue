@@ -7,14 +7,15 @@ import type { Schema } from '../../amplify/data/resource';
 import { generateClient } from 'aws-amplify/data';
 
 const client = generateClient<Schema>();
-const { sub: userSub } = useAuthSignin();
+const { sub: userSub, userInfo } = useAuthSignin();
 
 const props = defineProps<{
     nickName?: string | null | undefined,
 }>();
 
 const emits = defineEmits<{
-    (e: 'confirm'): void
+    (e: 'confirm'): void,
+    (e: 'close'): void,
 }>()
 
 const userWrite = reactive({
@@ -32,28 +33,39 @@ const errorMessage = computed(() => {
     }
 })
 
+const close = () => {
+    emits("close")
+}
+
 const writeUserNickName = async () => {
     if (!userSub.value) return
 
-    await client.models.User.create({
-        id: userSub.value,
-        nickName: userWrite.nickname,
-    });
-    // console.log("Userテーブルに新規作成しました");
+    if (userInfo.value) {
+        await client.models.User.update({
+            id: userSub.value,
+            nickName: userWrite.nickname,
+        });
+    } else {
+        await client.models.User.create({
+            id: userSub.value,
+            nickName: userWrite.nickname,
+        });
+    }
     emits("confirm")
+
 }
 
 
 </script>
 <template>
     <dialog class="active">
-        <!-- <h5>Write User</h5> -->
-        <!-- <hr> -->
+        <button class="link transparent extend absolute top right" @click="close">
+            <i>close</i>
+        </button>
         <p>使用するニックネームを入力してください</p>
         <div class="field border" :class="{ invalid: errorMessage.nickName }">
             <input type="text" v-model="userWrite.nickname">
             <span class="error">{{ errorMessage.nickName }}</span>
-            <!-- <span class="helper">※レビュー者名として表示されます</span> -->
         </div>
         <div class="fl">
             <button class="responsive" @click="writeUserNickName" :disabled="!!errorMessage.nickName">登録</button>

@@ -25,7 +25,6 @@ export function useAuthSignin() {
     onMounted(async () => {
         console.log("watched: user", user.value);
 
-        // if (newUser) {
         sub.value = user.userId as string; // Cognitoのsub
         console.log("ログインユーザー:", sub);
 
@@ -39,13 +38,7 @@ export function useAuthSignin() {
             existing.value = false;
             console.log("not exisitings");
         }
-        // }
     });
-
-    // ユーザーがサインイン状態になったら User テーブルをチェック/作成
-    // watch(user, async (newUser) => {
-
-    // });
 
     return { existing, sub, userInfo, loadUserInfo };
 }

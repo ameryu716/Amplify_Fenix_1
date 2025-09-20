@@ -41,4 +41,8 @@ const auth = useAuthenticator();
     -webkit-text-fill-color: #163514 !important;
   }
 }
+
+.amplify-authenticator__subtitle {
+  color: #222 !important;
+}
 </style>
